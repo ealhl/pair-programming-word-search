@@ -1,29 +1,16 @@
-const wordSearch = (letters, word) => {
-  if (letters.length === 0 || word.length === 0) {
-    return false;
-  }
+//Coded by Nicholas, Eva, Ina
+const transpose = m => m[0].map((x, i) => m.map(x => x[i])) // Transposes the letters in the array
 
-  //check for vertical words
-  const verticalJoin = [];
-  for (let i = 0; i < letters[0].length; i++) {
-    let verticalWord = "";
-    for (let j = 0; j < letters.length; j++) {
-      verticalWord += letters[j][i];
+const wordSearch = (letters, word) => { 
+    const horizontalJoin = letters.map(ls => ls.join(''))
+    const verticalJoin = transpose(letters).map(ls => ls.join('')) // Joins the letters in the array vertically
+    for (l of horizontalJoin) {
+        if (l.includes(word)) return true;
     }
-    verticalJoin.push(verticalWord);
-    // console.log(verticalWord);
-  }
-  for (let l of verticalJoin) {
-    if (l.includes(word)) return true;
-  }
-
-  //check for horizontal words
-  const horizontalJoin = letters.map((ls) => ls.join(""));
-  for (let l of horizontalJoin) {
-    // console.log(l);
-    if (l.includes(word)) return true;
-  }
-  return false;
+    for (l of verticalJoin) {  // Checks if the word is in the array vertically
+        if (l.includes(word)) return true;  
+    }
+    return false;  // Returns false if the word is not found
 };
 
-module.exports = wordSearch;
+module.exports = wordSearch
